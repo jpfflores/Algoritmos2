@@ -105,8 +105,26 @@ public class MinhaListaImpTest {
 	@Test
 	public void testTamanho() {
 		
+		MinhaListaImp<String> obj = null;
+		int tamanho = 0;
+		int previsto = 6;
+		obj =  new MinhaListaImp<String>("inicio");
+		gerarLista(obj,previsto);
+		tamanho = obj.tamanho();
+		Assert.assertEquals(previsto, tamanho);
+	}
+
+	private void gerarLista(MinhaListaImp<String> obj, int tamanho) {
+		Nodo<String> nodo = null;
+		nodo = obj.getInicio();
 		
-		fail("Not yet implemented");
+		for (int i = 0 ; i < tamanho -1 ; i++){
+			Nodo<String> novo = null;
+			novo = new Nodo<String>("valor_" + (i +1));
+			nodo.setProximo(novo);
+			nodo = novo;
+		}
+		
 	}
 
 }

@@ -1,5 +1,6 @@
 package br.com.senac.alp.aulas;
 
+
 public class MinhaListaImp<Tipo> implements MinhaLista<Tipo>{
 
 	private Nodo<Tipo> inicio = null;

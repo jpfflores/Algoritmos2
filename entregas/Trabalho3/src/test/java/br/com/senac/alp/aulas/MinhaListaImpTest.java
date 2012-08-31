@@ -104,7 +104,8 @@ public class MinhaListaImpTest {
 
 	@Test
 	public void testTamanho() {
-		
+		/* Não será testado tamanho zero, pois o não é possível criar uma lista vazia 
+		 * O tamanho previsto pode ser qualquer valor.*/
 		MinhaListaImp<String> obj = null;
 		int tamanho = 0;
 		int previsto = 6;

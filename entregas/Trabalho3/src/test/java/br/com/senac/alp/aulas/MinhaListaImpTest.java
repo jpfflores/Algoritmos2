@@ -103,9 +103,18 @@ public class MinhaListaImpTest {
 	}
 
 	@Test
+	public void testTamanhoZero() {
+		MinhaListaImp<String> obj = null;
+		int tamanho = 0;
+		int previsto = 0;
+		obj =  new MinhaListaImp<String>("inicio");
+		gerarLista(obj,previsto);
+		tamanho = obj.tamanho();
+		Assert.assertEquals(previsto, tamanho);
+	}
+
+	@Test
 	public void testTamanho() {
-		/* Não será testado tamanho zero, pois o não é possível criar uma lista vazia 
-		 * O tamanho previsto pode ser qualquer valor.*/
 		MinhaListaImp<String> obj = null;
 		int tamanho = 0;
 		int previsto = 6;
@@ -114,7 +123,7 @@ public class MinhaListaImpTest {
 		tamanho = obj.tamanho();
 		Assert.assertEquals(previsto, tamanho);
 	}
-
+	
 	private void gerarLista(MinhaListaImp<String> obj, int tamanho) {
 		Nodo<String> nodo = null;
 		nodo = obj.getInicio();

@@ -71,7 +71,7 @@ public class MinhaListaImpTest {
 		MinhaListaImp<String> obj = null;
 		String valor = null;
 		String prefixo = null;
-		obj =  new MinhaListaImp<String>("inicio");
+		obj =  new MinhaListaImp<String>();
 		valor = "valor";
 		obj.prefixar(valor);
 		prefixo = obterPrefixo(obj);
@@ -83,15 +83,41 @@ public class MinhaListaImpTest {
 		String resultado = null;
 		Nodo<String> nodo = null;
 		nodo = obj.getInicio();
+		nodo = nodo.getProximo();
 		resultado = nodo.getValor();
 		return resultado;
 	}
 
 	@Test
 	public void testBuscar() {
-		fail("Not yet implemented");
+		MinhaListaImp<String> obj = null;
+		obj = new MinhaListaImp();
+		int posicao = 5;
+		int tamanho = 7;
+		String esperado = "valor_5";
+		String resultado = new String();
+		gerarLista(obj,tamanho);
+		
+		try{
+			
+		}catch(IndexOutOfBoundsException e){
+			Assert.assertTrue(false);
+		}
 	}
 
+	@Test
+	public void testBuscarExcede() {
+		MinhaListaImp<String> obj = new MinhaListaImp<String>();
+		int posicao = 7;
+		int tamanho = 6;
+		gerarLista(obj,tamanho);
+		try{
+			obj.buscar(posicao);
+			Assert.assertTrue(false);
+		}catch(IndexOutOfBoundsException e){
+			Assert.assertTrue(true);
+		}
+	}
 	@Test
 	public void testInserir() {
 		fail("Not yet implemented");
@@ -103,13 +129,22 @@ public class MinhaListaImpTest {
 	}
 
 	@Test
+	public void testTamanhoZero() {
+		MinhaListaImp<String> obj = null;
+		int tamanho = 0;
+		int previsto = 0;
+		obj =  new MinhaListaImp<String>();
+		gerarLista(obj,previsto);
+		tamanho = obj.tamanho();
+		Assert.assertEquals(previsto, tamanho);
+	}
+	
+	@Test
 	public void testTamanho() {
-		/* Não será testado tamanho zero, pois o não é possível criar uma lista vazia 
-		 * O tamanho previsto pode ser qualquer valor.*/
 		MinhaListaImp<String> obj = null;
 		int tamanho = 0;
 		int previsto = 6;
-		obj =  new MinhaListaImp<String>("inicio");
+		obj =  new MinhaListaImp<String>();
 		gerarLista(obj,previsto);
 		tamanho = obj.tamanho();
 		Assert.assertEquals(previsto, tamanho);
@@ -119,9 +154,9 @@ public class MinhaListaImpTest {
 		Nodo<String> nodo = null;
 		nodo = obj.getInicio();
 		
-		for (int i = 0 ; i < tamanho -1 ; i++){
+		for (int i = 0 ; i < tamanho ; i++){
 			Nodo<String> novo = null;
-			novo = new Nodo<String>("valor_" + (i +1));
+			novo = new Nodo<String>("valor_" + (i));
 			nodo.setProximo(novo);
 			nodo = novo;
 		}

@@ -21,32 +21,17 @@ public class MinhaListaImpTest {
 	public void testMinhaListaImp() {
 		MinhaListaImp<String> obj = null;
 		String arg = null;
-		arg = "valor valido";
-		obj = new MinhaListaImp<String>(arg);
+		obj = new MinhaListaImp<String>();
 		Assert.assertNotNull(obj);
 		
 	}
 	
-	@Test
-	public void testMinhaListaImpNull() {
-		MinhaListaImp<String> obj = null;
-		String arg = null;
-		try{
-			obj = new MinhaListaImp<String>(arg);
-			fail();
-		}catch(IllegalArgumentException e){
-			// Por enquanto nada
-			Assert.assertTrue(true);
-		}
-		
-	}
 
 	@Test
 	public void testSufixar() {
-		MinhaListaImp<String> obj = null;
+		MinhaListaImp<String> obj = new MinhaListaImp<String>();
 		String valor = null;
 		String sufixo = null;
-		obj =  new MinhaListaImp<String>("inicio");
 		valor = "valor";
 		obj.sufixar(valor);
 		sufixo = obterSufixo(obj);
@@ -120,14 +105,75 @@ public class MinhaListaImpTest {
 	}
 	@Test
 	public void testInserir() {
-		fail("Not yet implemented");
+		MinhaListaImp<String> obj = null;
+		String esperado = "valor_inserido";
+		String resultado = null;
+		obj =  new MinhaListaImp<String>();
+		int posicao = 5;
+		int tamanho = 8;
+		gerarLista(obj, tamanho);
+		obj.inserir(posicao, esperado);
+		resultado = buscarValor(obj,posicao);
+		Assert.assertEquals(esperado, resultado);
 	}
 
 	@Test
-	public void testRemover() {
-		fail("Not yet implemented");
+	public void testInserirExcede() {
+		MinhaListaImp<String> obj = null;
+		String esperado = "valor_inserido";
+		String resultado = null;
+		obj =  new MinhaListaImp<String>();
+		int posicao = 10;
+		int tamanho = 8;
+		gerarLista(obj, tamanho);
+		try{
+			obj.inserir(posicao, esperado);
+			resultado = buscarValor(obj,posicao);
+			Assert.assertTrue(false);
+		}catch(IndexOutOfBoundsException e){
+			Assert.assertTrue(true);
+		}
 	}
 
+	public String buscarValor(MinhaListaImp<String> obj, int pos) {
+		Nodo<String> nodo = obj.getInicio();
+		
+		for (int i = 0; i < pos; i++) {
+			nodo = nodo.getProximo();
+		}
+		return nodo.getValor();
+	}
+	
+	@Test
+	public void testRemover() {
+		MinhaListaImp<String> obj = null;
+		int tamanho = 10;
+		int posicao = 7;
+		String previsto = null;
+		String resultado = null;
+		previsto = "valor_6";
+		obj =  new MinhaListaImp<String>();
+		gerarLista(obj,tamanho);
+		resultado = obj.remover(posicao);
+		Assert.assertEquals(previsto,resultado);
+	}
+
+	@Test
+	public void testRemoverExcede() {
+		MinhaListaImp<String> obj = null;
+		int tamanho = 7;
+		int posicao = 10;
+		String resultado = null;
+		obj =  new MinhaListaImp<String>();
+		gerarLista(obj,tamanho);
+		try{
+			resultado = obj.remover(posicao);
+			Assert.assertTrue(false);
+		}catch(IndexOutOfBoundsException e){
+			Assert.assertTrue(true);
+		}
+	}
+	
 	@Test
 	public void testTamanhoZero() {
 		MinhaListaImp<String> obj = null;

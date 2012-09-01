@@ -7,7 +7,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		MinhaLista<String> lista = new MinhaListaImp<String>("inicio");
+		MinhaLista<String> lista = new MinhaListaImp<String>();
 		System.out.println(lista.tamanho());
 		System.out.println(lista.buscar(0));
 		lista.prefixar("novoInicio");

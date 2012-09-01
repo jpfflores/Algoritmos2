@@ -66,9 +66,15 @@ public class MinhaListaImp<Tipo> implements MinhaLista<Tipo> {
 	}
 
 	private Nodo<Tipo> ultimoElemento() {
-		int ultimaPos = tamanho() - 1;
-		Nodo<Tipo> ultimo = buscarNodo(ultimaPos);
-		return ultimo;
+		int ultimaPos = tamanho();
+		try{
+			Nodo<Tipo> ultimo = buscarNodo(ultimaPos);
+			return ultimo;
+		} catch(IndexOutOfBoundsException ex)
+		{
+			return this.inicio;
+		}
+		
 	}
 
 	private Nodo<Tipo> buscarNodo(int pos) {

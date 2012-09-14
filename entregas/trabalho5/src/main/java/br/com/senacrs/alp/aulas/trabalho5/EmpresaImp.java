@@ -1,13 +1,14 @@
 package br.com.senacrs.alp.aulas.trabalho5;
-import br.com.senac.alp.aulas.MinhaLista;
-import br.com.senac.alp.aulas.MinhaListaImp;
+import br.com.senacrs.alp.aulas.MinhaLista;
+import br.com.senacrs.alp.aulas.MinhaListaImp;
 
 
 public class EmpresaImp implements Empresa{
 
 	@Override
 	public void adicionaFuncionario(Funcionario funcionario) {
-		MinhaLista<FuncionarioImp> lista = new MinhaListaImp<FuncionarioImp>();
+		MinhaLista<Funcionario> lista = new MinhaListaImp<Funcionario>();
+		lista.sufixar(funcionario);
 	}
 
 	@Override

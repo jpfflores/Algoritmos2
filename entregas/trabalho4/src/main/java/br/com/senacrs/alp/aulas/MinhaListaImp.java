@@ -1,4 +1,5 @@
-package br.com.senac.alp.aulas;
+package br.com.senacrs.alp.aulas;
+
 
 public class MinhaListaImp<Tipo> implements MinhaLista<Tipo> {
 

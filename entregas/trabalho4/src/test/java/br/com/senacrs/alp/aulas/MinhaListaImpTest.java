@@ -1,4 +1,4 @@
-package br.com.senac.alp.aulas;
+package br.com.senacrs.alp.aulas;
 
 import static org.junit.Assert.*;
 import junit.framework.Assert;
@@ -6,6 +6,9 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import br.com.senacrs.alp.aulas.MinhaListaImp;
+import br.com.senacrs.alp.aulas.Nodo;
 
 public class MinhaListaImpTest {
 

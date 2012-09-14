@@ -1,4 +1,4 @@
-package br.com.senac.alp.aulas;
+package br.com.senacrs.alp.aulas;
 
 public interface MinhaLista <Tipo extends Object> { //Generics, semelhante ao Template
 	

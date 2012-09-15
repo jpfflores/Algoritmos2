@@ -1,9 +1,7 @@
-package br.com.senac.alp.aulas;
-
-import static org.junit.Assert.*;
-
+package test.java.br.com.senac.alp.aulas;
 import java.util.Arrays;
-import java.util.Random;
+
+import main.java.br.com.senac.alp.aulas.PrimeiraAula;
 
 import org.junit.After;
 import org.junit.Assert;

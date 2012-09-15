@@ -79,7 +79,7 @@ public class MinhaListaImpTest {
 	@Test
 	public void testBuscar() {
 		MinhaListaImp<String> obj = null;
-		obj = new MinhaListaImp();
+		obj = new MinhaListaImp<String>();
 		int posicao = 5;
 		int tamanho = 7;
 		String esperado = "valor_5";

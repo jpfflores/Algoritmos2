@@ -9,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.senacrs.alp.aulas.MinhaLista;
 import br.com.senacrs.alp.aulas.trabalho5.Empresa;
 import br.com.senacrs.alp.aulas.trabalho5.Funcionario;
 import br.com.senacrs.alp.aulas.trabalho5.FuncionarioFactory;
@@ -25,8 +24,8 @@ public class EmpresaTest {
 
 		this.empresa = new EmpresaImp();
 		
-		this.factory = null; // colocar seu
-								// FuncionarioFactoryImpl.getInstancia();
+		this.factory = FuncionarioFactoryImp.getInstancia();
+		
 	}
 
 	@After
@@ -104,7 +103,7 @@ public class EmpresaTest {
 		
 		resultado = this.factory.criaFuncionario(nome, salario);
 		this.empresa.adicionaFuncionario(resultado);
-		MinhaLista lista = null;
+		//MinhaLista lista = null;
 		return resultado;
 	}
 

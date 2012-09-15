@@ -1,4 +1,4 @@
-package br.com.senac.alp.aulas;
+package main.java.br.com.senac.alp.aulas;
 
 public interface InterfacePrimeiraAula {
 

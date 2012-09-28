@@ -19,7 +19,12 @@ public class MinhaListaReversivelImp<Tipo> implements MinhaListaReversivel<Tipo>
 
 		Nodo<Tipo> ultimo = buscarUltimoNodo();
 		Nodo<Tipo> novoUltimo = new Nodo<Tipo>(valor);
-		
+		if(tamanho() == 0){
+			this.inicio.setProximo(novoUltimo);
+			novoUltimo.setAnterior(this.inicio);
+			return;
+		}
+			
 		ultimo.setProximo(novoUltimo);
 		novoUltimo.setAnterior(ultimo);
 	}
@@ -28,7 +33,7 @@ public class MinhaListaReversivelImp<Tipo> implements MinhaListaReversivel<Tipo>
 	private Nodo<Tipo> buscarUltimoNodo() {
 		
 		int tamanho = tamanho();
-		Nodo<Tipo> resultado = buscarNodo(tamanho);
+		Nodo<Tipo> resultado = buscarNodo(tamanho-1);
 		
 		return resultado;
 	}
@@ -38,7 +43,7 @@ public class MinhaListaReversivelImp<Tipo> implements MinhaListaReversivel<Tipo>
 		
 		Nodo<Tipo> resultado = getInicio();
 		
-		for (int i = 0; i < posicao; i++) {
+		for (int i = 0; i <= posicao; i++) {
 			resultado = resultado.getProximo();
 		}
 				
@@ -47,16 +52,20 @@ public class MinhaListaReversivelImp<Tipo> implements MinhaListaReversivel<Tipo>
 
 	public void prefixar(Tipo valor) {
 		
-		Nodo<Tipo> inicio = null;
 		Nodo<Tipo> primeiro = null;
 		Nodo<Tipo> novoPrimeiro = null;
 		
-		inicio = this.inicio;
-		primeiro = inicio.getProximo();
-		novoPrimeiro = new Nodo<Tipo>(valor);		
+		novoPrimeiro = new Nodo<Tipo>(valor);
+		if(tamanho() == 0 ){
+			this.inicio.setProximo(novoPrimeiro);
+			novoPrimeiro.setAnterior(this.inicio);
+			return;
+		}
+		primeiro = this.inicio.getProximo();
+				
 		novoPrimeiro.setProximo(primeiro);
-		inicio.setProximo(novoPrimeiro);
-		novoPrimeiro.setAnterior(inicio);
+		this.inicio.setProximo(novoPrimeiro);
+		novoPrimeiro.setAnterior(this.inicio);
 		
 	}
 
@@ -65,7 +74,7 @@ public class MinhaListaReversivelImp<Tipo> implements MinhaListaReversivel<Tipo>
 		Nodo<Tipo> nodo = null;
 		
 		verificarPosicaoParaBuscar(posicao);
-		nodo = buscarNodo(posicao + 1);
+		nodo = buscarNodo(posicao);
 		
 		return nodo.getValor();
 	}
@@ -99,20 +108,24 @@ public class MinhaListaReversivelImp<Tipo> implements MinhaListaReversivel<Tipo>
 
 	public void inserir(int posicao, Tipo valor) {
 
+		Nodo<Tipo> antigo = null;
 		Nodo<Tipo> anterior = null;
-		Nodo<Tipo> proximo = null;
 		Nodo<Tipo> nodo = null;
 		
+		if(this.tamanho() == 0) {
+			nodo = new Nodo<Tipo>(valor);
+			this.inicio.setProximo(nodo);
+			nodo.setAnterior(this.inicio);
+			return;
+		}
 		verificarPosicaoParaInserir(posicao);
-		anterior = buscarNodo(posicao);
-		proximo = anterior.getProximo();
+		antigo = buscarNodo(posicao);
+		anterior = antigo.getAnterior();
 		nodo = new Nodo<Tipo>(valor);
 		anterior.setProximo(nodo);
 		nodo.setAnterior(anterior);
-		if(proximo != null) {
-			nodo.setProximo(proximo);	
-			proximo.setAnterior(nodo);
-		}
+		nodo.setProximo(antigo);	
+		antigo.setAnterior(nodo);
 		
 	}
 	
@@ -173,15 +186,22 @@ public class MinhaListaReversivelImp<Tipo> implements MinhaListaReversivel<Tipo>
 	@Override
 	public void reverter() {
 		Nodo<Tipo> nodo = null;
-		Nodo<Tipo> nodoAnterior = null;
-		nodoAnterior = this.inicio;
-		
-		for(int i = this.tamanho() -1 ; i >= 0 ; i--) {
-			nodo = buscarNodo(i);
-			nodoAnterior.setProximo(nodo);
-			nodo.setAnterior(nodoAnterior);
-			nodoAnterior = nodo;
+		Nodo<Tipo> nodoPosterior = null;
+		if(this.tamanho() == 0){
+			return;
 		}
+		
+		for(int i = 0 ; i < this.tamanho() ; i++) {
+			nodo = buscarNodo(i);
+			if(nodoPosterior == null){
+				nodoPosterior = nodo;
+				continue;
+			}
+			nodoPosterior.setAnterior(nodo);
+			nodoPosterior = nodo;
+		}
+		this.inicio.setProximo(nodoPosterior);
+		nodoPosterior.setAnterior(this.inicio);
 	}
 
 }

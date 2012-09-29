@@ -5,7 +5,6 @@ public class Chefe extends FuncionarioImp {
 
 		public Chefe(String nome2, int salario) {
 		super(nome2, salario);
-		// TODO Auto-generated constructor stub
 	}
 
 		private Secretaria secretaria = null;

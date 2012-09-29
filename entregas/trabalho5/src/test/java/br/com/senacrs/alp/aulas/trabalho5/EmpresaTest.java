@@ -9,10 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.senacrs.alp.aulas.trabalho5.Empresa;
-import br.com.senacrs.alp.aulas.trabalho5.Funcionario;
-import br.com.senacrs.alp.aulas.trabalho5.FuncionarioFactory;
-
 public class EmpresaTest {
 
 	private static Random random = new Random(System.currentTimeMillis());

@@ -8,7 +8,6 @@ public class FuncionarioImp implements Funcionario, Pessoa{
 	private int salario = 0;
 	
 	public FuncionarioImp(String nome2, int salario) {
-		// TODO Auto-generated constructor stub
 		
 		nome = nome2;
 		this.salario = salario ;

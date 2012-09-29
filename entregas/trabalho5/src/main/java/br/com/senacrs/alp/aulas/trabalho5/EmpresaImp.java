@@ -18,7 +18,7 @@ public class EmpresaImp implements Empresa{
 			throw new IllegalArgumentException();
 		}
 		System.out.println("Fucionario " +  funcionario.toString());
-		listaFuncionarios.sufixar(funcionario);
+		listaFuncionarios.prefixar(funcionario);
 		System.out.println("Número de funcionarios " +  listaFuncionarios.tamanho());
 	}
 
@@ -40,7 +40,6 @@ public class EmpresaImp implements Empresa{
 
 	@Override
 	public int totalFolhaPgto() {
-		// TODO Auto-generated method stub
 		
 		FuncionarioImp func = null;
 		int total = 0;

@@ -21,11 +21,7 @@
 			<version>[4.0,)</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>br.com.senacrs.alp.aulas</groupId>
-			<artifactId>minhalista</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
 	</dependencies>
 
 
@@ -44,4 +40,8 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<dependencyManagement>
+		<dependencies>
+		</dependencies>
+	</dependencyManagement>
 </project>

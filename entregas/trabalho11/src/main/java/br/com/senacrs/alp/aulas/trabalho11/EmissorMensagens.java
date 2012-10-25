@@ -4,13 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
-import java.util.Map;
 
 public class EmissorMensagens {
 
 	File arquivo = null;
 	String separador = "=";
-	Map<String,String> mapa = new HashMap<String,String>();
+	HashMap<String,String> mapa = new HashMap<String,String>();
 
 	public EmissorMensagens(String nomeArquivo) {
 
@@ -31,16 +30,17 @@ public class EmissorMensagens {
 
 	public String formatarMensagem(String chave, Object... argumentos) {
 		String linha = null;
-		linha = mapa.get(chave);
+		linha = new String();
+		linha = "";
+		
+		System.out.println(chave);
+		linha = (String) mapa.get(chave);
+		System.out.println(linha);
 		if(linha == null){
 			throw new IllegalArgumentException();
 		}
 
-			
-		for(int i = 1 ; i < argumentos.length ; i++){
-			linha += " " +  argumentos[i];
-		}
-		
+		linha = String.format(linha, argumentos);
 		
 		return linha;
 	}
@@ -59,7 +59,8 @@ public class EmissorMensagens {
 				throw new IllegalArgumentException("Valor Inválido");
 			}
 			idxVal = linha.split(separador, 2);
-			mapa.put(idxVal[0],idxVal[1]);
+			System.out.println("Valor : " + idxVal[0] + " " + idxVal[1]);
+			mapa.put(idxVal[0].trim(),idxVal[1].trim());
 			linha = reader.readLine();
 		}
 

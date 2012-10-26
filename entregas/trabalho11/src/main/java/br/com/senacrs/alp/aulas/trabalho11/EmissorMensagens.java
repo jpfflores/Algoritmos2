@@ -7,9 +7,9 @@ import java.util.HashMap;
 
 public class EmissorMensagens {
 
-	File arquivo = null;
-	String separador = "=";
-	HashMap<String,String> mapa = new HashMap<String,String>();
+	private File arquivo = null;
+	private String separador = "=";
+	private HashMap<String,String> mapa = new HashMap<String,String>();
 
 	public EmissorMensagens(String nomeArquivo) {
 
@@ -26,6 +26,14 @@ public class EmissorMensagens {
 			throw new IllegalArgumentException(x);
 		}
 
+	}
+
+	public HashMap<String, String> getMapa() {
+		return mapa;
+	}
+
+	public void setMapa(HashMap<String, String> mapa) {
+		this.mapa = mapa;
 	}
 
 	public String formatarMensagem(String chave, Object... argumentos) {

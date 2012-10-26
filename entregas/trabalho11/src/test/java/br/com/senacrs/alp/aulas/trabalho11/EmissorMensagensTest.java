@@ -30,7 +30,7 @@ public class EmissorMensagensTest {
 	private final static Integer[] HORA_MINUTO = new Integer[] {10, 11};
 	private final static String[] RESULTADOS_PT = new String[]{
 		"Bom dia " + NOME_FULANO,
-		"Ocorreu um erro no módulo " + NOME_MODULO + " às " + HORA_MINUTO[0] + ":" + HORA_MINUTO[1], 
+		"Ocorreu um erro no modulo " + NOME_MODULO + " as " + HORA_MINUTO[0] + ":" + HORA_MINUTO[1], 
 	};
 	private final static String[] RESULTADOS_EN = new String[]{
 		"Good morning " + NOME_FULANO,

@@ -25,7 +25,7 @@ public class Main
     	
     	protocol = new ProtocolHandler(arq);
     	
-    	System.out.println( "Hello WWWorld! in " + protocol.getHost() + " na porta " + protocol.getPort());
+    	System.out.println( "Hello WWWorld! in " + protocol.getRootDir() + " na porta " + protocol.getPort());
     	/* Output in standard output
     	 * porta:root_dir
     	 * ERRO

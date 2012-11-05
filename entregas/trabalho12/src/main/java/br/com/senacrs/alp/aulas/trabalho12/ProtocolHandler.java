@@ -5,7 +5,7 @@ import java.io.File;
 public class ProtocolHandler {
 
 	private String port = null;
-	private String host = null;
+	private String root_dir = null;
 	
 	public String getPort() {
 		return port;
@@ -15,12 +15,12 @@ public class ProtocolHandler {
 		this.port = port;
 	}
 
-	public String getHost() {
-		return host;
+	public String getRootDir() {
+		return root_dir;
 	}
 
-	public void setHost(String host) {
-		this.host = host;
+	public void setRootDir(String host) {
+		this.root_dir = host;
 	}
 
 	public void getRequisition(String req){
@@ -38,9 +38,9 @@ public class ProtocolHandler {
 
 	private void carregarConfiguracao(Arquivo arquivo2) {
 		port = arquivo2.GetConfiguration("port");
-		host = arquivo2.GetConfiguration("host");
-		host.replaceAll("/",File.pathSeparator);
-		host.replace(".", System.getProperty("user.dir"));
+		root_dir = arquivo2.GetConfiguration("root_dir");
+		root_dir.replaceAll("/",File.pathSeparator);
+		root_dir.replace(".", System.getProperty("user.dir"));
 		
 	}
 	

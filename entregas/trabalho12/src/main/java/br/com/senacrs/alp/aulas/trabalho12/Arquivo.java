@@ -19,22 +19,6 @@ public class Arquivo {
 	FileInputStream input = null;
 	FileOutputStream output = null;
 	
-	public FileInputStream getInput() {
-		return input;
-	}
-
-	public FileOutputStream getOutput() {
-		return output;
-	}
-
-	public void setOutput(FileOutputStream output) {
-		this.output = output;
-	}
-
-	public void setInput(FileInputStream input) {
-		this.input = input;
-	}
-
 	public File getArquivo() {
 		return arquivo;
 	}

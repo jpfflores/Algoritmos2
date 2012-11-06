@@ -23,24 +23,9 @@ public class MainTest
 			+ File.separatorChar
 			+ "diretorio"
 			+ File.separatorChar;
-	private final static String NOME_ARQUIVO_ENTRADA = "entrada.txt";
-	private final static String NOME_ARQUIVO_SAIDA = "saida.txt";
+	private final static String NOME_ARQUIVO_ENTRADA = "server_conf.txt";
 	private final static String ARQUIVO_ENTRADA = DIRETORIO_ENTRADA
 			+ NOME_ARQUIVO_ENTRADA;
-	private final static String ARQUIVO_SAIDA = DIRETORIO_ENTRADA
-			+ NOME_ARQUIVO_SAIDA;
-	private final static String LIDO = "ler";
-	private final static String RETORNADO = "manipular";
-	private final static String[] CONTEUDO = new String[] {
-			"Este e o arquivo de entrada e deve", // 0
-			"ser utilizado nos testes", // 1
-			"Verifique que voce nao apagou o mesmo", // 2
-			"", // 3
-			"Eu consigo ler o arquivo", // 4
-			"Eu consigo escrever no arquivo", // 5
-	};
-	private static String SUBSTITUICAO = "Eu consigo " + RETORNADO
-			+ " o arquivo";
 
 	@Before
 	public void setUp() throws Exception {
@@ -61,7 +46,7 @@ public class MainTest
 		}
 	}
 
-	private Main criarMainWS(String arquivoEntrada) {
+	private Main criarMainWS(String arquivoEntrada) throws IllegalArgumentException{
 
 		Main obj = new Main();
 		String[] parameters = new String[1];
@@ -72,7 +57,7 @@ public class MainTest
 	}
 
 	@Test
-	public void testCriarDiretorio() {
+	public void testParametroIsArquivo() {
 
 		try {
 			criarMainWS(DIRETORIO_ENTRADA);
@@ -94,25 +79,11 @@ public class MainTest
 		Main obj = null;
 
 		try {
-			obj = criarMainWS(ARQUIVO_SAIDA);
+			obj = criarMainWS(ARQUIVO_ENTRADA);
 			fail("Deveria ter abortado");
 		} catch (IllegalArgumentException e) {
 			Assert.assertTrue(true);
 		}
-	}
-
-	@Test
-	public void testLerArquivo() {
-
-		Main obj = null;
-		String[] resultado = null;
-		String msg = null;
-
-		obj = criarMainWS(ARQUIVO_ENTRADA);
-		
-		msg = "Resultado :" + Arrays.toString(resultado);
-		msg += " Esperado :" + Arrays.toString(CONTEUDO);
-		Assert.assertTrue(msg, Arrays.deepEquals(CONTEUDO, resultado));
 	}
 
 	

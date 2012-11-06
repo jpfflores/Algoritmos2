@@ -43,7 +43,7 @@ public class Arquivo {
 	}
 	
 	public Arquivo() {
-	
+		
 	}
 
 	public void fecharArquivo() throws IOException{
@@ -58,7 +58,7 @@ public class Arquivo {
 	}
 	
 	
-	public void carregarArquivo() throws Exception, IllegalArgumentException {
+	public void carregarArquivo() throws IllegalArgumentException {
 		String[] idxVal = new String[2];
 		FileReader file = null;
 		BufferedReader reader = null;

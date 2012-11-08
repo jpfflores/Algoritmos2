@@ -1,9 +1,7 @@
 package br.com.senacrs.alp.aulas.trabalho12;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,8 +14,6 @@ public class Arquivo {
 	static String NEW_LINE = System.getProperty("line.separator");
 	private Map<String,String> mapa = new HashMap<String,String>();
 	
-	FileInputStream input = null;
-	FileOutputStream output = null;
 	
 	public File getArquivo() {
 		return arquivo;
@@ -32,15 +28,14 @@ public class Arquivo {
 		try
 		{
 			arquivo = new File(arq);
+			if(!arquivo.exists()){
+				throw new IllegalArgumentException();
+			}
 			if(arquivo.isDirectory()){
 				throw new IllegalArgumentException();
 			}
-			input = new FileInputStream(arquivo);
-			System.out.println("Abriu o arquivo");
 		}catch(Exception fex){
-			System.out.println("Falha ao abrir o arquivo");
-		} finally {
-			input.close();
+			throw new IllegalArgumentException(fex);
 		}
 		
 	}
@@ -49,18 +44,6 @@ public class Arquivo {
 		
 	}
 
-	public void fecharArquivo() throws IOException{
-		if(arquivo.exists()){
-			try {
-				input.close();
-			} catch (IOException e) {
-				System.out.println("Falha ao fechar o arquivo");
-				throw e;
-			}
-		}
-	}
-	
-	
 	public void carregarArquivo() throws IllegalArgumentException {
 		String[] idxVal = new String[2];
 		FileReader file = null;
@@ -83,7 +66,6 @@ public class Arquivo {
 				throw new IllegalArgumentException("Valor Inválido");
 			}
 			idxVal = linha.split(separador, 2);
-			System.out.println("Valor : " + idxVal[0] + " " + idxVal[1]);
 			mapa.put(idxVal[0].trim(),idxVal[1].trim());
 			try {
 				linha = reader.readLine();

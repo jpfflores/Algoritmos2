@@ -31,9 +31,7 @@ public class ProtocolHandler {
 	}
 
 	private void carregarConfiguracao(Arquivo arquivo2)  throws IllegalArgumentException{
-		System.out.println("Vai Carregar a Configuração.");
 		String pTemp = null;
-		
 		pTemp = arquivo2.GetConfiguration("port");
 		try	{
 			port = Integer.parseInt(pTemp);
@@ -41,29 +39,31 @@ public class ProtocolHandler {
 			throw new IllegalArgumentException(ex);
 		}
 		
-			
-		System.out.println("Port :" + port);
 		String path = null;
 		path = arquivo2.GetConfiguration("root_dir");
-		System.out.println(path);
-		String home = System.getProperty("user.dir");
-		String replace = "'./www'";
-		System.out.println("User DIR " + home);
-		path.replace(replace, path);
-		path.replaceAll("/",File.pathSeparator);
-		System.out.println("Path alterado " + path);
-		File arquivo = new File(path);
-		root_dir = arquivo;
-		System.out.println("Path gravado " + arquivo.getPath());
-		if(!arquivo.isDirectory()){
+		path = path.replace(".", System.getProperty("user.dir"));
+		
+		String replace = "/";
+		
+		while(path.contains(replace)){
+			path = path.replace(replace,File.separator);
+		}
+		
+		root_dir = new File(path);
+		if(!root_dir.exists()){
+			System.out.println("Nao existe");
 			throw new IllegalArgumentException();
 		}
 		
+		if(!root_dir.isDirectory()){
+			System.out.println("Não é diret´rorio");
+			throw new IllegalArgumentException();
+		}
 		
 	}
 
 	public String getRoot_dir() {
-		return root_dir.getPath();
+		return root_dir.toString();
 	}
 
 		

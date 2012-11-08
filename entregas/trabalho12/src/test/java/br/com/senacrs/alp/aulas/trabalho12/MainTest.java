@@ -24,8 +24,14 @@ public class MainTest
 			+ "diretorio"
 			+ File.separatorChar;
 	private final static String NOME_ARQUIVO_ENTRADA = "server_conf.txt";
+	private final static String NOME_ARQUIVO_INEX = "server_conf.err";
+	private final static String NOME_ARQUIVO_ERRADO = "server_conf.nok";
 	private final static String ARQUIVO_ENTRADA = DIRETORIO_ENTRADA
 			+ NOME_ARQUIVO_ENTRADA;
+	private final static String ARQUIVO_ERRADO = DIRETORIO_ENTRADA
+			+ NOME_ARQUIVO_ERRADO;
+	private final static String ARQUIVO_INEX = DIRETORIO_ENTRADA
+			+ NOME_ARQUIVO_INEX;
 
 	@Before
 	public void setUp() throws Exception {
@@ -57,7 +63,7 @@ public class MainTest
 	}
 
 	@Test
-	public void testParametroIsArquivo() {
+	public void testParametroIsDiretorio() {
 
 		try {
 			criarMainWS(DIRETORIO_ENTRADA);
@@ -70,22 +76,41 @@ public class MainTest
 	@Test
 	public void testCriarArquivoValido() {
 
-		criarMainWS(ARQUIVO_ENTRADA);
+		try {
+			criarMainWS(ARQUIVO_ENTRADA);
+			Assert.assertTrue(true);
+			
+		} catch (IllegalArgumentException e) {
+			fail("Não deveria ter abortado");
+		}
+		
 	}
 
 	@Test
-	public void testLerArquivoInexistente() {
+	public void testCarregarArquivoInexistente() {
 
 		Main obj = null;
 
 		try {
-			obj = criarMainWS(ARQUIVO_ENTRADA);
+			obj = criarMainWS(ARQUIVO_INEX);
 			fail("Deveria ter abortado");
 		} catch (IllegalArgumentException e) {
 			Assert.assertTrue(true);
 		}
 	}
 
+	@Test
+	public void testCarregarArquivoComErro() {
+
+		Main obj = null;
+
+		try {
+			obj = criarMainWS(ARQUIVO_ERRADO);
+			fail("Deveria ter abortado");
+		} catch (IllegalArgumentException e) {
+			Assert.assertTrue(true);
+		}
+	}
 	
 
 }

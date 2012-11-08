@@ -27,14 +27,17 @@ public class Arquivo {
 		this.arquivo = arquivo;
 	}
 	
-	public Arquivo(String arq) throws IOException{
+	public Arquivo(String arq) throws Exception{
 		
 		try
 		{
 			arquivo = new File(arq);
+			if(arquivo.isDirectory()){
+				throw new IllegalArgumentException();
+			}
 			input = new FileInputStream(arquivo);
 			System.out.println("Abriu o arquivo");
-		}catch(FileNotFoundException fex){
+		}catch(Exception fex){
 			System.out.println("Falha ao abrir o arquivo");
 		} finally {
 			input.close();
@@ -64,9 +67,17 @@ public class Arquivo {
 		BufferedReader reader = null;
 		String linha = null;
 
-		file = new FileReader(arquivo);
+		try {
+			file = new FileReader(arquivo);
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException(e);
+		}
 		reader = new BufferedReader(file);
-		linha = reader.readLine();
+		try {
+			linha = reader.readLine();
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
+		}
 		while (linha != null) {
 			if (!isLinhaValida(linha)) {
 				throw new IllegalArgumentException("Valor Inválido");
@@ -74,7 +85,11 @@ public class Arquivo {
 			idxVal = linha.split(separador, 2);
 			System.out.println("Valor : " + idxVal[0] + " " + idxVal[1]);
 			mapa.put(idxVal[0].trim(),idxVal[1].trim());
-			linha = reader.readLine();
+			try {
+				linha = reader.readLine();
+			} catch (IOException e) {
+				throw new IllegalArgumentException(e);
+			}
 		}
 
 	}

@@ -31,21 +31,19 @@ public class Main {
 		try {
 			arq = new Arquivo(configFile);
 			arq.carregarArquivo();
-		} catch (IOException e) {
-			System.out.println("ERRO");
-			return;
-		} catch (IllegalArgumentException ex) {
+		} catch (Exception e) {
 			System.out.println("ERRO");
 			return;
 		}
+		
 		try{
 			protocol = new ProtocolHandler(arq);
 			
-
+			System.out.println("["+ protocol.getPort() + "]"+":" + protocol.getRoot_dir());
 		}catch(Exception ex){
 			System.out.println("ERRO");
 		}
-		System.out.println("["+ protocol.getPort() + "]"+":" + protocol.getRoot_dir());
+		
 
 		/*
 		 * Output in standard output porta:root_dir ERRO

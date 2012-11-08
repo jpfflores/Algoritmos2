@@ -30,22 +30,31 @@ public class ProtocolHandler {
 		carregarConfiguracao(arquivo);
 	}
 
-	private void carregarConfiguracao(Arquivo arquivo2)  throws IllegalArgumentException,NumberFormatException {
+	private void carregarConfiguracao(Arquivo arquivo2)  throws IllegalArgumentException{
 		System.out.println("Vai Carregar a Configuração.");
 		String pTemp = null;
 		
 		pTemp = arquivo2.GetConfiguration("port");
-		System.out.println("Port :" + pTemp);
-		port = Integer.parseInt(pTemp);
-			
+		try	{
+			port = Integer.parseInt(pTemp);
+		} catch(NumberFormatException ex){
+			throw new IllegalArgumentException(ex);
+		}
 		
+			
+		System.out.println("Port :" + port);
 		String path = null;
 		path = arquivo2.GetConfiguration("root_dir");
 		System.out.println(path);
+		String home = System.getProperty("user.dir");
+		String replace = "'./www'";
+		System.out.println("User DIR " + home);
+		path.replace(replace, path);
 		path.replaceAll("/",File.pathSeparator);
-		path.replace(".", System.getProperty("user.dir"));
 		System.out.println("Path alterado " + path);
 		File arquivo = new File(path);
+		root_dir = arquivo;
+		System.out.println("Path gravado " + arquivo.getPath());
 		if(!arquivo.isDirectory()){
 			throw new IllegalArgumentException();
 		}

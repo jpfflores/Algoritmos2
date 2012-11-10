@@ -33,6 +33,14 @@ public class MainTest
 	private final static String ARQUIVO_INEX = DIRETORIO_ENTRADA
 			+ NOME_ARQUIVO_INEX;
 
+	private final static String NOME_GET_ERRADO = "get.nok";
+	private final static String NOME_GET_CORRETO = "get.txt";
+
+	private final static String ARQUIVO_GET_ENTRADA = DIRETORIO_ENTRADA
+			+ NOME_ARQUIVO_ENTRADA;
+	private final static String ARQUIVO_GET_ERRADO = DIRETORIO_ENTRADA
+			+ NOME_ARQUIVO_ERRADO;
+	
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -43,74 +51,138 @@ public class MainTest
 
 	@Test
 	public void testCriarNulo() {
-
+		MainReal  main = null;
 		try {
-			criarMainWS(null);
+			main = criarMainWS(null);
 			fail("Deveria ter abortado");
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			Assert.assertTrue(true);
 		}
 	}
 
-	private Main criarMainWS(String arquivoEntrada) throws IllegalArgumentException{
+	private MainReal criarMainWS(String[] args) throws Exception{
 
-		Main obj = new Main();
-		String[] parameters = new String[1];
-		parameters[0] = arquivoEntrada;
-		obj.main(parameters);
-		return obj;
+		MainReal mainreal = new MainReal(args);
+		return mainreal;
 
+	}
+
+	@Test
+	public void testConfigIsDiretorio() {
+		String[] args = new String[2];
+		MainReal  main = null;
+		try {
+			args[0] = DIRETORIO_ENTRADA;
+			args[1] = ARQUIVO_GET_ENTRADA;
+			main = criarMainWS(args);
+			fail("Deveria ter abortado");
+		} catch (Exception e) {
+			Assert.assertTrue(true);
+		}
 	}
 
 	@Test
 	public void testParametroIsDiretorio() {
-
+		String[] args = new String[2];
+		MainReal  main = null;
 		try {
-			criarMainWS(DIRETORIO_ENTRADA);
+			args[0] = ARQUIVO_ENTRADA;
+			args[1] = DIRETORIO_ENTRADA;
+			main = criarMainWS(args);
 			fail("Deveria ter abortado");
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			Assert.assertTrue(true);
 		}
 	}
-
 	@Test
 	public void testCriarArquivoValido() {
-
+		String[] args = new String[2];
+		MainReal  main = null;
 		try {
-			criarMainWS(ARQUIVO_ENTRADA);
+			args[0] = DIRETORIO_ENTRADA;
+			args[1] = ARQUIVO_GET_ENTRADA;
+			main = criarMainWS(args);
 			Assert.assertTrue(true);
 			
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			fail("Não deveria ter abortado");
 		}
 		
 	}
 
 	@Test
-	public void testCarregarArquivoInexistente() {
+	public void testCarregarConfigInexistente() {
 
-		Main obj = null;
-
+		String[] args = new String[2];
+		MainReal  main = null;
 		try {
-			obj = criarMainWS(ARQUIVO_INEX);
+			args[0] = ARQUIVO_INEX;
+			args[1] = ARQUIVO_GET_ENTRADA;
+			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			Assert.assertTrue(true);
 		}
 	}
 
 	@Test
-	public void testCarregarArquivoComErro() {
+	public void testCarregarConfigComErro() {
 
-		Main obj = null;
-
+		String[] args = new String[2];
+		MainReal  main = null;
 		try {
-			obj = criarMainWS(ARQUIVO_ERRADO);
+			args[0] = ARQUIVO_ERRADO;
+			args[1] = ARQUIVO_GET_ENTRADA;
+			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			Assert.assertTrue(true);
 		}
 	}
 	
+	@Test
+	public void testCarregarSomenteUmParametro() {
 
+		MainReal  main = null;
+		String[] args = new String[2];
+		try {
+			args[0] = DIRETORIO_ENTRADA;
+			args[1] = null;
+			main = criarMainWS(args);			
+			fail("Deveria ter abortado");
+		} catch (Exception e) {
+			Assert.assertTrue(true);
+		}
+	}
+
+	@Test
+	public void testCarregarGETInexistente() {
+
+		String[] args = new String[2];
+		MainReal  main = null;
+		try {
+			args[0] = DIRETORIO_ENTRADA;
+			args[1] = ARQUIVO_INEX;
+			main = criarMainWS(args);			
+			fail("Deveria ter abortado");
+		} catch (Exception e) {
+			Assert.assertTrue(true);
+		}
+	}
+
+	@Test
+	public void testCarregarGETInvalido() {
+
+		String[] args = new String[2];
+		MainReal  main = null;
+		try {
+			args[0] = DIRETORIO_ENTRADA;
+			args[1] = ARQUIVO_GET_ERRADO;
+			main = criarMainWS(args);			
+			fail("Deveria ter abortado");
+		} catch (Exception e) {
+			Assert.assertTrue(true);
+		}
+	}
+	
 }

@@ -8,39 +8,22 @@ public class Main {
 		/*
 		 * Recovering the configuration parameters At this moment we got only
 		 * one parameter
+		  	GET /index.html HTTP/1.1
+			Host: www.exemplo.com => root_dir
+			b)  print www.exemplo/index.html
+				ERRO
 		 */
-
-		if(args == null || args.length == 0 || args[0] == null){
-			System.out.println("ERRO");
-			throw new IllegalArgumentException();
-		}
-		
-		String configFile;
-		configFile = args[0];
-		Arquivo arq = null;
-		ProtocolHandler protocol = null;
-
-		try {
-			arq = new Arquivo(configFile);
-			arq.carregarArquivo();
-		} catch (Exception e) {
-			System.out.println("ERRO");
-			throw new IllegalArgumentException(e);
-		}
-		
+		String resultado = null;
+		MainReal realmain = null;
 		try{
-			protocol = new ProtocolHandler(arq);
+			realmain = new MainReal(args);
 			
-			System.out.println("["+ protocol.getPort() + "]"+":" + protocol.getRoot_dir());
-		}catch(Exception ex){
+		}catch(Exception ex ){
 			System.out.println("ERRO");
-			throw new IllegalArgumentException();
 		}
 		
 
-		/*
-		 * Output in standard output porta:root_dir ERRO
-		 */
 	}
-
+	
+	
 }

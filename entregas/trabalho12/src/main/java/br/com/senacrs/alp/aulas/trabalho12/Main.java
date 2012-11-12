@@ -13,7 +13,7 @@ public class Main {
 			b)  print www.exemplo/index.html
 				ERRO
 		 */
-		String resultado = null;
+		
 		MainReal realmain = null;
 		try{
 			realmain = new MainReal(args);

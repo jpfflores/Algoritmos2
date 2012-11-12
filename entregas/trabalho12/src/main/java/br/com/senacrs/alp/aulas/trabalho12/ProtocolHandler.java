@@ -46,20 +46,15 @@ public class ProtocolHandler {
 		path = mapa.get("root_dir");
 		path = path.replace(".", System.getProperty("user.dir"));
 		
-		String replace = "/";
-		
-		while(path.contains(replace)){
-			path = path.replace(replace,File.separator);
-		}
-		
+		path = corrigeSeparador(path);
+				
 		root_dir = new File(path);
 		if(!root_dir.exists()){
-			System.out.println("Nao existe");
 			throw new IllegalArgumentException();
 		}
 		
 		if(!root_dir.isDirectory()){
-			System.out.println("Não é diret´rorio");
+			System.out.println("Não é diretório");
 			throw new IllegalArgumentException();
 		}
 		
@@ -70,6 +65,7 @@ public class ProtocolHandler {
 	}
 
 	public void setRequisicao(String requisicao) {
+		requisicao = corrigeSeparador(requisicao);
 		this.requisicao = requisicao;
 	}
 
@@ -77,9 +73,19 @@ public class ProtocolHandler {
 		return root_dir.toString();
 	}
 
-	private boolean ValidaRequisicao(){
-		return true;
+	private void ValidaRequisicao() throws Exception{
+		/* nao esta sendo usada no trabalho12b */
+		return;
 	}
 		
+	private String corrigeSeparador(String endereco){
+		
+		String replace = "/";
+		
+		while(endereco.contains(replace)){
+			endereco = endereco.replace(replace,File.separator);
+		}
+		return endereco;
+	}
 	
 }

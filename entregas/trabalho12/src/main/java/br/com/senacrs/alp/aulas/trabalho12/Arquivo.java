@@ -1,11 +1,5 @@
 package br.com.senacrs.alp.aulas.trabalho12;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class Arquivo {

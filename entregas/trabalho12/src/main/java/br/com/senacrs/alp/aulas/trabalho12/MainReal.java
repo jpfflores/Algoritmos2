@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainReal {
-
+/*Commitando mesmo desatualizado */
 	private Map<String,String> mapa = new HashMap<String,String>();
 	static private String separador = "=";
 	

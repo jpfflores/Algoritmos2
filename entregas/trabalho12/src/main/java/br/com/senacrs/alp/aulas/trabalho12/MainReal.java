@@ -9,51 +9,48 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainReal {
-/*Commitando mesmo desatualizado */
-	private Map<String,String> mapa = new HashMap<String,String>();
+	/* Commitando mesmo desatualizado */
+	private Map<String, String> mapa = new HashMap<String, String>();
 	static private String separador = "=";
-	
-	public MainReal (String[] args) throws Exception
-	{
-		String resultado= null;
 
-		if(args == null || args.length == 0 || args[0] == null || args[1] == null){
+	public MainReal(String[] args) throws Exception {
+		String resultado = null;
+
+		if (args == null || args.length == 0 || args[0] == null
+				|| args[1] == null) {
 			System.out.println("ERRO");
 			throw new IllegalArgumentException();
 		}
-		
+
 		String configFile, getFile;
 		configFile = args[0];
 		getFile = args[1];
-		
+
 		Arquivo arq = null;
 		Arquivo arqGet = null;
 		ProtocolHandler protocol = null;
 
 		arq = new Arquivo(configFile);
 		carregarConfig(arq);
-		
+
 		arq = new Arquivo(getFile);
 		String requisicao = null;
 		requisicao = carregarGet(arq);
-		
+
 		protocol = new ProtocolHandler(mapa);
 		protocol.setRequisicao(requisicao);
-		
-		//resultado = protocol.getPort() + ":" + protocol.getRoot_dir();
-		
-		resultado = protocol.getRoot_dir() + protocol.getRequisicao();
+		resultado = protocol.getResposta();
 
 		System.out.println(resultado);
-		
+
 	}
-	
-	void CriaConfig(String configFile) throws Exception{
-		
+
+	void CriaConfig(String configFile) throws Exception {
+
 	}
-	
-	void CriaGet(String getFile) throws Exception{
-		
+
+	void CriaGet(String getFile) throws Exception {
+
 	}
 
 	public void carregarConfig(Arquivo arq) throws Exception {
@@ -79,7 +76,7 @@ public class MainReal {
 				throw new IllegalArgumentException("Valor Inválido");
 			}
 			idxVal = linha.split(separador, 2);
-			mapa.put(idxVal[0].trim(),idxVal[1].trim());
+			mapa.put(idxVal[0].trim(), idxVal[1].trim());
 			try {
 				linha = reader.readLine();
 			} catch (IOException e) {
@@ -88,10 +85,9 @@ public class MainReal {
 		}
 
 	}
-	
+
 	public boolean isLinhaValida(String linha) {
 
-		
 		int count = 0;
 		int pos = 1;
 		do {
@@ -110,14 +106,14 @@ public class MainReal {
 		}
 
 	}
-	
-	public String GetConfiguration(String parameter){
+
+	public String GetConfiguration(String parameter) {
 		String result;
 		result = mapa.get(parameter);
 		return result;
 	}
-	
-	private String carregarGet(Arquivo arq) throws Exception {
+
+	private String carregarGet(Arquivo arq) throws IOException, IllegalArgumentException {
 		String resultado = null;
 		String[] idxVal = null;
 		FileReader file = null;
@@ -131,36 +127,48 @@ public class MainReal {
 			throw new IllegalArgumentException(e);
 		}
 		reader = new BufferedReader(file);
-		linha  = lerLinha(reader);
+		linha = lerLinha(reader);
 		idxVal = linha.split(" ");
 		resultado = validaGet(idxVal);
-		
+
 		linha = lerLinha(reader);
 		idxVal = linha.split(" ");
 		validaHost(idxVal);
+		
 		return resultado;
-		
 
 	}
-	
-	private String validaGet(String[] args) throws Exception{
-		String requisicao = null;
-		if(args[0] != "GET"){
-			throw new Exception();
+
+	private String validaGet(String[] args) throws IllegalArgumentException{
+		String resultado = null;
+		
+		if(args.length!=3) {
+			throw new IllegalArgumentException();
+		}
+		if(!args[0].equalsIgnoreCase("GET")){
+			throw new IllegalArgumentException();
 		}
 		
-		
-		return requisicao;
-			
-	}
-
-	private void validaHost(String[] args) throws Exception{
-		if(args[0] != "HOST"){
-			throw new Exception();
+		resultado = args[1];
+		if(!args[2].equalsIgnoreCase("HTTP/1.1")){
+			throw new IllegalArgumentException();
 		}
+		
+		return resultado;
 	}
 
-	private String lerLinha(BufferedReader reader) throws Exception{
+	private void validaHost(String[] args) throws IllegalArgumentException {
+		if(args.length!=2) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (!args[0].equalsIgnoreCase("HOST:")) {
+			throw new IllegalArgumentException();
+		}
+		
+	}
+
+	private String lerLinha(BufferedReader reader) throws IOException {
 		String resultado = null;
 		resultado = reader.readLine();
 		return resultado;

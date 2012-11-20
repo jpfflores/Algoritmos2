@@ -52,6 +52,18 @@ public class MainTest
 	private final static String ARQUIVO_GET_ERRADO_HOST = DIRETORIO_ENTRADA
 			+ NOME_GET_ERRADO_HOST;
 
+	private final static String NOME_DESTINO_INEXISTENTE = "index.nok";
+	private final static String NOME_DESTINO_VAZIO = "index.emp";
+	private final static String NOME_DESTINO_EXISTE = "index.html";
+
+	private final static String ARQUIVO_DESTINO_INEXISTENTE = DIRETORIO_ENTRADA
+			+ NOME_DESTINO_INEXISTENTE;
+	private final static String ARQUIVO_DESTINO_VAZIO = DIRETORIO_ENTRADA
+			+ NOME_DESTINO_VAZIO;
+	private final static String ARQUIVO_DESTINO_EXISTE = DIRETORIO_ENTRADA
+			+ NOME_DESTINO_EXISTE;
+
+	
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -73,11 +85,13 @@ public class MainTest
 
 	@Test
 	public void testConfigIsDiretorio() {
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = DIRETORIO_ENTRADA;
 			args[1] = ARQUIVO_GET_ENTRADA;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -87,11 +101,13 @@ public class MainTest
 
 	@Test
 	public void testParametroIsDiretorio() {
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = ARQUIVO_ENTRADA;
 			args[1] = DIRETORIO_ENTRADA;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -102,11 +118,13 @@ public class MainTest
 	@Test
 	public void testCarregarConfigInexistente() {
 
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = ARQUIVO_INEX;
 			args[1] = ARQUIVO_GET_ENTRADA;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -117,11 +135,13 @@ public class MainTest
 	@Test
 	public void testCarregarConfigComErroPort() {
 
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = ARQUIVO_ERRADO_PORT;
 			args[1] = ARQUIVO_GET_ENTRADA;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -132,11 +152,13 @@ public class MainTest
 	@Test
 	public void testCarregarConfigComErroRoot() {
 
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = ARQUIVO_ERRADO_ROOT;
 			args[1] = ARQUIVO_GET_ENTRADA;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -148,10 +170,12 @@ public class MainTest
 	public void testCarregarSomenteUmParametro() {
 
 		MainReal  main = null;
-		String[] args = new String[2];
+		String[] args = new String[3];
 		try {
 			args[0] = DIRETORIO_ENTRADA;
 			args[1] = null;
+			args[2] = null;
+
 			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -162,11 +186,13 @@ public class MainTest
 	@Test
 	public void testCarregarGETInexistente() {
 
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = DIRETORIO_ENTRADA;
 			args[1] = ARQUIVO_INEX;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -177,11 +203,13 @@ public class MainTest
 	@Test
 	public void testCarregarGETInvalido() {
 
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = DIRETORIO_ENTRADA;
 			args[1] = ARQUIVO_GET_ERRADO;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -192,11 +220,13 @@ public class MainTest
 	@Test
 	public void testCarregarGETHostInvalido() {
 
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = DIRETORIO_ENTRADA;
 			args[1] = ARQUIVO_GET_ERRADO_HOST;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -207,11 +237,13 @@ public class MainTest
 	@Test
 	public void testCarregarGETHTTPInvalido() {
 
-		String[] args = new String[2];
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = DIRETORIO_ENTRADA;
 			args[1] = ARQUIVO_GET_ERRADO_HTTP;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);			
 			fail("Deveria ter abortado");
 		} catch (Exception e) {
@@ -219,15 +251,47 @@ public class MainTest
 		}
 	}
 	
-	
-	
 	@Test
-	public void testCriarArquivoValido() {
-		String[] args = new String[2];
+	public void testCarregarTargetInvalido() {
+
+		String[] args = new String[3];
 		MainReal  main = null;
 		try {
 			args[0] = ARQUIVO_ENTRADA;
 			args[1] = ARQUIVO_GET_ENTRADA;
+			args[2] = ARQUIVO_DESTINO_INEXISTENTE;
+			main = criarMainWS(args);			
+			fail("Deveria ter abortado");
+		} catch (Exception e) {
+			Assert.assertTrue(true);
+		}
+	}
+	
+	@Test
+	public void testCarregarTargetVazio() {
+
+		String[] args = new String[3];
+		MainReal  main = null;
+		try {
+			args[0] = ARQUIVO_ENTRADA;
+			args[1] = ARQUIVO_GET_ENTRADA;
+			args[2] = ARQUIVO_DESTINO_VAZIO;
+			main = criarMainWS(args);	
+			Assert.assertTrue(true);
+		} catch (Exception e) {
+			fail("Não deveria ter abortado");
+		}
+	}
+	
+	@Test
+	public void testCriarArquivoValido() {
+		String[] args = new String[3];
+		MainReal  main = null;
+		try {
+			args[0] = ARQUIVO_ENTRADA;
+			args[1] = ARQUIVO_GET_ENTRADA;
+			args[2] = ARQUIVO_DESTINO_EXISTE;
+
 			main = criarMainWS(args);
 			Assert.assertTrue(true);
 			

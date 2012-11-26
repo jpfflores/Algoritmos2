@@ -1,2 +1,2 @@
-GET /index.html HTTP/1.1
+GET /valido.html HTTP/1.1
 Host: www.exemplo.com

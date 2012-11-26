@@ -40,9 +40,11 @@ public class MainTest
 	private final static String NOME_GET_ERRADO = "get1.nok";
 	private final static String NOME_GET_ERRADO_HTTP = "get1.nok";
 	private final static String NOME_GET_ERRADO_HOST = "get2.nok";
-	
 	private final static String NOME_GET_CORRETO = "get.txt";
-
+	private final static String NOME_GET_COM_DESTINO_VAZIO = "get.emp";
+	private final static String NOME_GET_COM_TARGET_INEXISTENTE = "get.err";
+	private final static String NOME_GET_COM_TARGET_PADRAO = "get.pdr";
+	
 	private final static String ARQUIVO_GET_ENTRADA = DIRETORIO_ENTRADA
 			+ NOME_GET_CORRETO;
 	private final static String ARQUIVO_GET_ERRADO = DIRETORIO_ENTRADA
@@ -51,18 +53,30 @@ public class MainTest
 			+ NOME_GET_ERRADO_HTTP;
 	private final static String ARQUIVO_GET_ERRADO_HOST = DIRETORIO_ENTRADA
 			+ NOME_GET_ERRADO_HOST;
+	private final static String ARQUIVO_GET_COM_DESTINO_VAZIO = DIRETORIO_ENTRADA
+			+ NOME_GET_COM_DESTINO_VAZIO;
+	private final static String ARQUIVO_GET_COM_TARGET_INEXISTENTE = DIRETORIO_ENTRADA
+			+ NOME_GET_COM_TARGET_INEXISTENTE;
+	private final static String ARQUIVO_GET_COM_TARGET_PADRAO = DIRETORIO_ENTRADA
+			+ NOME_GET_COM_TARGET_PADRAO;
 
-	private final static String NOME_DESTINO_INEXISTENTE = "index.nok";
-	private final static String NOME_DESTINO_VAZIO = "index.emp";
-	private final static String NOME_DESTINO_EXISTE = "index.html";
-
+	
+	private final static String NOME_DESTINO_INEXISTENTE = "saida_inex.html";
+	private final static String NOME_DESTINO_EXISTE = "saida.html";
+	private final static String NOME_DESTINO_TARGET_VAZIO = "saida_emp.html";
+	private final static String NOME_DESTINO_TARGET_INEXISTENTE = "saida_erro.html";
+	private final static String NOME_DESTINO_TARGET_PADRAO = "saida_padrao.html";
+	
 	private final static String ARQUIVO_DESTINO_INEXISTENTE = DIRETORIO_ENTRADA
 			+ NOME_DESTINO_INEXISTENTE;
-	private final static String ARQUIVO_DESTINO_VAZIO = DIRETORIO_ENTRADA
-			+ NOME_DESTINO_VAZIO;
 	private final static String ARQUIVO_DESTINO_EXISTE = DIRETORIO_ENTRADA
 			+ NOME_DESTINO_EXISTE;
-
+	private final static String ARQUIVO_DESTINO_TARGET_VAZIO = DIRETORIO_ENTRADA
+			+ NOME_DESTINO_TARGET_VAZIO;
+	private final static String ARQUIVO_DESTINO_TARGET_INEXISTENTE = DIRETORIO_ENTRADA
+			+ NOME_DESTINO_TARGET_INEXISTENTE;
+	private final static String ARQUIVO_DESTINO_TARGET_PADRAO = DIRETORIO_ENTRADA
+			+ NOME_DESTINO_TARGET_PADRAO;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -259,14 +273,14 @@ public class MainTest
 		try {
 			args[0] = ARQUIVO_ENTRADA;
 			args[1] = ARQUIVO_GET_ENTRADA;
-			args[2] = ARQUIVO_DESTINO_INEXISTENTE;
-			main = criarMainWS(args);			
-			fail("Deveria ter abortado");
-		} catch (Exception e) {
+			args[2] = NOME_DESTINO_INEXISTENTE;
+			main = criarMainWS(args);	
 			Assert.assertTrue(true);
+		} catch (Exception e) {
+			fail("Não deveria ter abortado");
 		}
 	}
-	
+
 	@Test
 	public void testCarregarTargetVazio() {
 
@@ -274,8 +288,56 @@ public class MainTest
 		MainReal  main = null;
 		try {
 			args[0] = ARQUIVO_ENTRADA;
+			args[1] = ARQUIVO_GET_COM_DESTINO_VAZIO;
+			args[2] = NOME_DESTINO_TARGET_VAZIO;
+			main = criarMainWS(args);	
+			Assert.assertTrue(true);
+		} catch (Exception e) {
+			fail("Não deveria ter abortado");
+		}
+	}
+
+	@Test
+	public void testCarregarTargetInexistente() {
+
+		String[] args = new String[3];
+		MainReal  main = null;
+		try {
+			args[0] = ARQUIVO_ENTRADA;
+			args[1] = ARQUIVO_GET_COM_TARGET_INEXISTENTE;
+			args[2] = NOME_DESTINO_TARGET_INEXISTENTE;
+			main = criarMainWS(args);	
+			Assert.assertTrue(true);
+		} catch (Exception e) {
+			fail("Não deveria ter abortado");
+		}
+	}
+
+	@Test
+	public void testCarregarTargetPadrao() {
+		/* Arquivo com o target = "/", deve responder 404 se nao existir index.html ou 200 se existir*/
+		String[] args = new String[3];
+		MainReal  main = null;
+		try {
+			args[0] = ARQUIVO_ENTRADA;
+			args[1] = ARQUIVO_GET_COM_TARGET_PADRAO;
+			args[2] = NOME_DESTINO_TARGET_PADRAO;
+			main = criarMainWS(args);	
+			Assert.assertTrue(true);
+		} catch (Exception e) {
+			fail("Não deveria ter abortado");
+		}
+	}
+
+	@Test
+	public void testCarregarDestinoInexistente() {
+
+		String[] args = new String[3];
+		MainReal  main = null;
+		try {
+			args[0] = ARQUIVO_ENTRADA;
 			args[1] = ARQUIVO_GET_ENTRADA;
-			args[2] = ARQUIVO_DESTINO_VAZIO;
+			args[2] = NOME_DESTINO_INEXISTENTE;
 			main = criarMainWS(args);	
 			Assert.assertTrue(true);
 		} catch (Exception e) {
@@ -290,7 +352,7 @@ public class MainTest
 		try {
 			args[0] = ARQUIVO_ENTRADA;
 			args[1] = ARQUIVO_GET_ENTRADA;
-			args[2] = ARQUIVO_DESTINO_EXISTE;
+			args[2] = NOME_DESTINO_EXISTE;
 
 			main = criarMainWS(args);
 			Assert.assertTrue(true);

@@ -12,6 +12,7 @@ public class Arquivo extends File{
 		super(arq);
 	}
 	
+	
 	public void escreveArquivo(String conteudo){
 		BufferedWriter bufferedWriter = null;
         
@@ -21,21 +22,12 @@ public class Arquivo extends File{
         	}
             bufferedWriter = new BufferedWriter(new FileWriter(this));
             bufferedWriter.write(conteudo);
+            bufferedWriter.flush();
+            bufferedWriter.close();
             
         } catch (IOException ex) {
             System.out.println("ERRO");
-        } finally {
-            //Close the BufferedWriter
-            try {
-                if (bufferedWriter != null) {
-                    bufferedWriter.flush();
-                    bufferedWriter.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
         }
-
 	}
 
 }

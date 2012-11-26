@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -16,7 +17,7 @@ public class ProtocolHandler {
 
 	private int port = 0;
 	// private String root_dir = null;
-	private File root_dir = null;
+	private Arquivo root_dir = null;
 	static private String separador = "=";
 
 	private String requisicao = null;
@@ -25,7 +26,10 @@ public class ProtocolHandler {
 	private boolean encontrado = false;
 	private String conteudo = null;
 	private Map<String, String> mapa = new HashMap<String, String>();
+	private Arquivo target = null;
 
+	private Arquivo saida = null;
+	
 	public int getPort() {
 		return port;
 	}
@@ -57,11 +61,18 @@ public class ProtocolHandler {
 
 		String path = null;
 		path = mapa.get("root_dir");
+		if (path == null) {
+			throw new IllegalArgumentException();
+		}
+		if (!path.startsWith(".", 0)) {
+			throw new IllegalArgumentException();
+		}
+
 		path = path.replace(".", System.getProperty("user.dir"));
 
 		path = corrigeSeparador(path);
 
-		root_dir = new File(path);
+		root_dir = new Arquivo(path);
 		if (!root_dir.exists()) {
 			throw new IllegalArgumentException();
 		}
@@ -110,6 +121,8 @@ public class ProtocolHandler {
 		// resultado = protocol.getRoot_dir() + protocol.getRequisicao();
 
 		// Construindo o cabeçalho
+
+		gerarConteudo();
 		resultado += "HTTP/1.0 " + resposta + '\n';
 		resultado += "Date: " + gerarData() + "\n";
 		resultado += "Server: Cris-Jose.edu \n";
@@ -120,7 +133,8 @@ public class ProtocolHandler {
 		}
 		resultado += "Content-type: text/html; charset-utf-8 \n";
 		resultado += "Connection: close \n \n";
-		System.out.println(resultado);
+		resposta = resultado + conteudo;
+		saida.escreveArquivo(resposta);
 
 	}
 
@@ -145,7 +159,7 @@ public class ProtocolHandler {
 		FileReader file = null;
 		BufferedReader reader = null;
 		String linha = null;
-		if (!arquivo.exists() || !arquivo.isDirectory()) {
+		if (!arquivo.exists() || arquivo.isDirectory()) {
 			throw new IllegalArgumentException();
 		}
 		try {
@@ -220,7 +234,7 @@ public class ProtocolHandler {
 		reader = new BufferedReader(file);
 		linha = lerLinha(reader);
 		idxVal = linha.split(" ");
-		resultado = ProtocolHandler.validaGet(idxVal);
+		resultado = validaGet(idxVal);
 
 		linha = lerLinha(reader);
 		idxVal = linha.split(" ");
@@ -269,21 +283,23 @@ public class ProtocolHandler {
 
 		requisicao = corrigeSeparador(requisicao);
 		String path = null;
-		path = root_dir + requisicao;
-		File file = null;
-		file = new File(path);
+		path = root_dir.getPath() + requisicao;
+		Arquivo file = null;
+		file = new Arquivo(path);
 		if (!file.exists()) {
-			throw new IllegalArgumentException();
+			resposta = "404 NotFound";
+			encontrado = false;
+			return;
 		}
 
 		if (!file.isDirectory()) {
 			resposta = "200 OK ";
 			encontrado = true;
-			gerarResposta();
+			target = file;
 			return;
 		}
 
-		file = new File(path + "index.html");
+		file = new Arquivo(path + "index.html");
 		if (!file.exists()) {
 			resposta = "404 NotFound";
 			encontrado = false;
@@ -291,7 +307,41 @@ public class ProtocolHandler {
 			resposta = "200 OK ";
 			encontrado = true;
 		}
-		gerarResposta();
+		target = file;
 	}
 
+	public void carregarExit(String trg) {
+		trg = root_dir.getPath() + File.separator + trg;
+		saida = new Arquivo(trg);
+
+		
+	}
+	
+	private void gerarConteudo(){
+		if(!encontrado){
+			conteudo = "";
+			return;
+		}
+		LinkedList<String> linhas = new LinkedList<String>();
+		String linha = new String();
+		BufferedReader reader = null;
+		FileReader file = null;
+		try{
+			file = new FileReader((File)target);
+			reader = new BufferedReader(file);
+			linha = reader.readLine();
+			while(linha!= null){
+				linhas.add(linha);
+				linha = reader.readLine();
+			}
+		}catch(Exception ex){
+			throw new IllegalArgumentException();
+		}
+		conteudo = "";
+		
+		for(int i = 0 ; i < linhas.size(); i++){
+			conteudo += linhas.get(i) + "\n";
+		}
+		
+	}
 }

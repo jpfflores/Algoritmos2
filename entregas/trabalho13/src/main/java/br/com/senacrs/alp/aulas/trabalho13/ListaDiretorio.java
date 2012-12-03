@@ -1,7 +1,7 @@
 package br.com.senacrs.alp.aulas.trabalho13;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Collections;
 
 public class ListaDiretorio {
@@ -23,8 +23,8 @@ public class ListaDiretorio {
 
 	public String[] listaConteudoDiretorio(String diretorio) {
 		String[] resultado = null;
-		ArrayList<String> diretorios = null;
-		ArrayList<String> arquivos = null;
+		LinkedList<String> diretorios = null;
+		LinkedList<String> arquivos = null;
 		validaDiretorio(diretorio);
 
 		File listDir[] = m_Diretorio.listFiles();
@@ -34,8 +34,8 @@ public class ListaDiretorio {
 			resultado = gerarListagemDiretorioVazio(listDir);
 			return resultado;
 		}
-		diretorios = new ArrayList<String>();
-		arquivos = new ArrayList<String>();
+		diretorios = new LinkedList<String>();
+		arquivos = new LinkedList<String>();
 		for (int i = 0; i < listDir.length; i++) {
 			if (listDir[i].isDirectory()) {
 				diretorios.add("d " + listDir[i].getName());
@@ -74,8 +74,8 @@ public class ListaDiretorio {
 		return resultado;
 	}
 
-	private String[] gerarListagemDiretorio(ArrayList<String> diretorios,
-			ArrayList<String> arquivos) {
+	private String[] gerarListagemDiretorio(LinkedList<String> diretorios,
+			LinkedList<String> arquivos) {
 
 		String resultado[] = null;
 		resultado = new String[(int) (2 + m_Tamanho)];
@@ -90,7 +90,7 @@ public class ListaDiretorio {
 	}
 
 	private void adicionarEntidades(String[] resultado, int idx,
-			ArrayList<String> entidades) {
+			LinkedList<String> entidades) {
 		ordenandoEntidades(entidades);
 		for (int i = 0; i < entidades.size(); i++) {
 			resultado[idx] = entidades.get(i);
@@ -99,7 +99,7 @@ public class ListaDiretorio {
 
 	}
 
-	private void ordenandoEntidades(ArrayList entidades) {
+	private void ordenandoEntidades(LinkedList<String> entidades) {
 		CompararNomes compara = null;
 		compara = new CompararNomes();
 		Collections.sort(entidades, compara);
